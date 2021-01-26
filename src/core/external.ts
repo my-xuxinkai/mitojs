@@ -1,8 +1,8 @@
-import { ERRORTYPES, BREADCRUMBTYPES } from '../common/constant'
+import { ERRORTYPES, BREADCRUMBTYPES } from '@/common/constant'
 import { isError, extractErrorStack, getLocationHref, getTimestamp, unknownToString, isWxMiniEnv } from '../utils/index'
 import { transportData } from './transportData'
 import { breadcrumb } from './breadcrumb'
-import { Severity } from '../utils/Severity'
+import { Severity } from '@/utils/Severity'
 import { getCurrentRoute } from '@/wx-mini/utils'
 
 interface LogTypes {

@@ -53,6 +53,11 @@ export type CompositeEvents = typeof CompositeEvents
 
 /**
  * 用户行为栈事件类型
+ * 用户行为类型整合
+ * user action:用户点击、用户输入、路由跳转
+ * HTTP:XHR请求、fetch请求
+ * debug：console、自定义上报错误
+ * exception:资源请求错误、unhandledrejection、代码错误
  */
 export enum BREADCRUMBTYPES {
   ROUTE = 'Route',

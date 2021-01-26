@@ -1,4 +1,4 @@
-import { Breadcrumb } from '../core/breadcrumb'
+import { Breadcrumb } from '@/core'
 import { BreadcrumbPushData } from './breadcrumb'
 import { ReportDataType } from './transportData'
 type CANCEL = null | undefined | boolean
@@ -18,9 +18,12 @@ interface IRequestHeaderConfig {
 }
 
 type TSetRequestHeader = (key: string, value: string) => {}
+
 export interface IBeforeAppAjaxSendConfig {
   setRequestHeader: TSetRequestHeader
 }
+
+// 参数接口类
 export interface InitOptions extends SilentEventTypes, HooksTypes, WxSilentEventTypes {
   /**
    * dsn服务器地址

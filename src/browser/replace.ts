@@ -12,6 +12,14 @@ function isFilterHttpUrl(url: string) {
   return options.filterXhrUrlRegExp && options.filterXhrUrlRegExp.test(url)
 }
 
+// 从订阅中心订阅事件，并重写原生事件，增加事件发布，最后添加回调
+export function addReplaceHandler(handler: ReplaceHandler) {
+  // 从订阅中心订阅事件
+  subscribeEvent(handler)
+  // 重写XHR原生事件，并在重写后增加事件发布
+  replace(handler.type as EVENTTYPES)
+}
+
 function replace(type: EVENTTYPES) {
   switch (type) {
     case EVENTTYPES.XHR:
@@ -43,11 +51,10 @@ function replace(type: EVENTTYPES) {
   }
 }
 
-export function addReplaceHandler(handler: ReplaceHandler) {
-  subscribeEvent(handler)
-  replace(handler.type as EVENTTYPES)
-}
-
+/**
+ * 如果是SDK发送的接口，就不用收集该接口的信息。
+ * 如果需要发布事件就调用triggerHandlers(EVENTTYPES.XHR, this.mito_xhr)
+ */
 function xhrReplace(): void {
   if (!('XMLHttpRequest' in _global)) {
     return
@@ -58,6 +65,7 @@ function xhrReplace(): void {
     'open',
     (originalOpen: voidFun): voidFun => {
       return function (this: MITOXMLHttpRequest, ...args: any[]): void {
+        // 收集接口信息
         this.mito_xhr = {
           method: variableTypeDetection.isString(args[0]) ? args[0].toUpperCase() : args[0],
           url: args[1],
@@ -78,6 +86,7 @@ function xhrReplace(): void {
         //   triggerHandlers(EVENTTYPES.XHR, this.mito_xhr)
         //   logger.error(`接口错误,接口信息:${JSON.stringify(this.mito_xhr)}`)
         // })
+        // 调用原始open函数
         originalOpen.apply(this, args)
       }
     }
@@ -94,8 +103,10 @@ function xhrReplace(): void {
         })
         options.beforeAppAjaxSend && options.beforeAppAjaxSend({ method, url }, this)
         on(this, 'loadend', function (this: MITOXMLHttpRequest) {
+          // 如果是sdk本身接口请求就不处理
           if ((method === EMethods.Post && transportData.isSdkTransportUrl(url)) || isFilterHttpUrl(url)) return
           const { responseType, response, status } = this
+          // 收集接口信息
           this.mito_xhr.reqData = args[0]
           const eTime = getTimestamp()
           this.mito_xhr.time = eTime
@@ -104,8 +115,10 @@ function xhrReplace(): void {
             this.mito_xhr.responseText = typeof response === 'object' ? JSON.stringify(response) : response
           }
           this.mito_xhr.elapsedTime = eTime - this.mito_xhr.sTime
+          // 发布事件，在handleEvent中处理
           triggerHandlers(EVENTTYPES.XHR, this.mito_xhr)
         })
+        // 调用原始的send函数
         originalSend.apply(this, args)
       }
     }

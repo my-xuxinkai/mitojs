@@ -1,5 +1,5 @@
-import { IAnyObject, IntegrationError } from '../types/common'
-import { voidFun, globalVar, HTTP_CODE, ERRORTYPES } from '../common/constant'
+import { IAnyObject, IntegrationError } from '@/types/common'
+import { voidFun, globalVar, HTTP_CODE, ERRORTYPES } from '@/common/constant'
 import { logger } from './logger'
 import { nativeToString, variableTypeDetection } from './is'
 

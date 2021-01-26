@@ -1007,6 +1007,15 @@ function fromHttpStatus(httpStatus) {
     return SpanStatus.UnknownError;
 }
 
+/**
+ * 关于接口跨域、超时的问题：这两种情况发生的时候，接口返回的响应体和响应头里面都是空的，
+ * status等于0，所以很难区分两者，但是正常情况下，一般项目中都的请求都是复杂请求，
+ * 所以在正式请求会先进行option进行预请求，如果是跨域的话基本几十毫秒就会返回来，
+ * 所以以此作为临界值来判断跨域与超时的问题（如果是接口不存在也会被判断成接口跨域）。
+ *
+ * @param data
+ * @returns {{request: {traceId: (*|string|string), httpType, method, data: (any|string), url}, level: string, response: {data: (*|string), status}, name: string, time, type: string, message: string, url: (string|string), elapsedTime}}
+ */
 function httpTransform(data) {
     var message = '';
     var elapsedTime = data.elapsedTime, time = data.time, method = data.method, traceId = data.traceId, type = data.type, status = data.status;

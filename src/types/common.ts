@@ -1,4 +1,4 @@
-import { HTTPTYPE } from '../common/constant'
+import { HTTPTYPE } from '@/common/constant'
 
 export interface IAnyObject {
   [key: string]: any

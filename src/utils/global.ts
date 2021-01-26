@@ -20,12 +20,14 @@ interface MITOGlobal {
   __MITO__?: MitoSupport
 }
 
+// 浏览器环境判断
 export const isNodeEnv = variableTypeDetection.isProcess(typeof process !== 'undefined' ? process : 0)
 
 export const isWxMiniEnv =
   variableTypeDetection.isObject(typeof wx !== 'undefined' ? wx : 0) && variableTypeDetection.isFunction(typeof App !== 'undefined' ? App : 0)
 
 export const isBrowserEnv = variableTypeDetection.isWindow(typeof window !== 'undefined' ? window : 0)
+
 /**
  * 获取全局变量
  *
@@ -44,13 +46,14 @@ export { _global, _support }
 
 _support.replaceFlag = _support.replaceFlag || {}
 const replaceFlag = _support.replaceFlag
+
 export function setFlag(replaceType: EVENTTYPES | WxEvents, isSet: boolean): void {
   if (replaceFlag[replaceType]) return
   replaceFlag[replaceType] = isSet
 }
 
 export function getFlag(replaceType: EVENTTYPES | WxEvents): boolean {
-  return replaceFlag[replaceType] ? true : false
+  return replaceFlag[replaceType]
 }
 
 /**

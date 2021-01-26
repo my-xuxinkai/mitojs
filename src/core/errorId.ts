@@ -1,11 +1,14 @@
 import { isWxMiniEnv, variableTypeDetection } from '@/utils'
 import { getAppId } from '@/wx-mini/constant'
-import { ERRORTYPES, EVENTTYPES } from '../common/constant'
-import { ReportDataType } from '../types/transportData'
+import { ERRORTYPES, EVENTTYPES } from '@/common/constant'
+import { ReportDataType } from '@/types'
+
 const allErrorNumber: unknown = {}
 /**
+ * 唯一错误id生成
  * generate error unique Id
  * @param data
+ * @param apikey
  */
 export default function createErrorId(data: ReportDataType, apikey: string): number | null {
   let id: any

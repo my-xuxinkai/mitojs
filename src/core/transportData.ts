@@ -1,12 +1,13 @@
 import { _support, validateOption, logger, isBrowserEnv, isWxMiniEnv, variableTypeDetection } from '../utils/index'
-import { Queue } from '../utils/index'
+import { Queue } from '@/utils'
 import createErrorId from './errorId'
-import { SDK_NAME, SDK_VERSION, SERVER_URL } from '../common/config'
+import { SDK_NAME, SDK_VERSION, SERVER_URL } from '@/common/config'
 import { breadcrumb } from './breadcrumb'
 import { EMethods, InitOptions } from '../types/options'
 import { AuthInfo, TransportDataType, ReportDataType } from '../types/transportData'
 
 /**
+ * 发送数据到服务端
  * 用来传输数据类，包含img标签、xhr请求
  * 功能：支持img请求和xhr请求、可以断点续存（保存在localstorage），
  * 待开发：目前不需要断点续存，因为接口不是很多，只有错误时才触发，如果接口太多可以考虑合并接口、

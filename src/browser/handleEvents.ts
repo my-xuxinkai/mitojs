@@ -1,12 +1,12 @@
-import { BREADCRUMBTYPES, ERRORTYPES, globalVar, ERROR_TYPE_RE, HTTP_CODE } from '../common/constant'
+import { BREADCRUMBTYPES, ERRORTYPES, globalVar, ERROR_TYPE_RE, HTTP_CODE } from '@/common/constant'
 import { resourceTransform, httpTransform } from '../core/transformData'
-import { transportData } from '../core/transportData'
-import { breadcrumb } from '../core/breadcrumb'
+import { transportData } from '@/core'
+import { breadcrumb } from '@/core'
 import { getLocationHref, getTimestamp, isError, parseUrlToObj, extractErrorStack, unknownToString } from '../utils/index'
-import { ReportDataType } from '../types/transportData'
-import { Severity } from '../utils/Severity'
-import { Replace } from '../types/replace'
-import { MITOHttp } from '../types/common'
+import { ReportDataType } from '@/types'
+import { Severity } from '@/utils/Severity'
+import { Replace } from '@/types'
+import { MITOHttp } from '@/types/common'
 
 export interface ResourceErrorTarget {
   src?: string
@@ -14,6 +14,7 @@ export interface ResourceErrorTarget {
   localName?: string
 }
 
+// 处理事件回调
 const HandleEvents = {
   /**
    * 处理xhr、fetch回调
@@ -34,13 +35,16 @@ const HandleEvents = {
         data: result,
         level: Severity.Error
       })
+      // 保存用户的行为轨迹，默认情况设置20长度
       transportData.send(result)
     }
   },
   /**
    * 处理window的error的监听回到
+   * js代码错误&&资源错误：监听window的error事件
    */
   handleError(errorEvent: ErrorEvent): void {
+    // 判断errorEvent.target.localName是否有值，有的话就是资源错误，在handleErrors中拿到信息
     const target = errorEvent.target as ResourceErrorTarget
     if (target.localName) {
       // 资源加载错误 提取有用数据
@@ -52,9 +56,10 @@ const HandleEvents = {
         data,
         level: Severity.Error
       })
+      // 上报错误
       return transportData.send(data)
     }
-    // code error
+    // code error 代码错误
     const { message, filename, lineno, colno, error } = errorEvent
     let result: ReportDataType
     if (error && isError(error)) {

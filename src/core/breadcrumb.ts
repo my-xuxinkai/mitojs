@@ -1,8 +1,8 @@
-import { BREADCRUMBTYPES, BREADCRUMBCATEGORYS } from '../common/constant'
+import { BREADCRUMBTYPES, BREADCRUMBCATEGORYS } from '@/common/constant'
 import { logger, validateOption, getTimestamp, slientConsoleScope } from '../utils/index'
-import { _support } from '../utils/global'
-import { BreadcrumbPushData } from '../types/breadcrumb'
-import { InitOptions } from '../types/options'
+import { _support } from '@/utils'
+import { BreadcrumbPushData } from '@/types'
+import { InitOptions } from '@/types'
 
 export class Breadcrumb {
   private maxBreadcrumbs = 10

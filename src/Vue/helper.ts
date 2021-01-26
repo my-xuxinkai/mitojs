@@ -1,9 +1,9 @@
 import { getBigVersion, getLocationHref, getTimestamp, variableTypeDetection } from '../utils/index'
-import { ERRORTYPES, BREADCRUMBTYPES } from '../common/constant'
+import { ERRORTYPES, BREADCRUMBTYPES } from '@/common/constant'
 import { ViewModel, VueInstance } from './types'
 import { breadcrumb, transportData } from '../core/index'
-import { ReportDataType } from '../types/transportData'
-import { Severity } from '../utils/Severity'
+import { ReportDataType } from '@/types'
+import { Severity } from '@/utils/Severity'
 
 export function handleVueError(err: Error, vm: ViewModel, info: string, level: Severity, breadcrumbLevel: Severity, Vue: VueInstance): void {
   const version = Vue?.version

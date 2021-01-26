@@ -18,7 +18,7 @@ export class Logger {
   }
 
   bindOptions(debug: boolean): void {
-    this.enabled = debug ? true : false
+    this.enabled = debug
   }
 
   enable(): void {

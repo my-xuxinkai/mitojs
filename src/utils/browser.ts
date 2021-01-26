@@ -1,4 +1,4 @@
-import { EVENTTYPES, ERRORTYPES, WxAppEvents, WxPageEvents } from '../common/constant'
+import { EVENTTYPES, ERRORTYPES, WxAppEvents, WxPageEvents } from '@/common/constant'
 import { getLocationHref, getTimestamp } from './helpers'
 import { setFlag } from './global'
 import { ReportDataType, InitOptions } from '../types/index'
@@ -51,7 +51,7 @@ export function parseUrlToObj(
     relative: match[5] + query + fragment // everything minus origin
   }
 }
-
+// 手动设置重写需要重写哪些类型，其实就是设置哪些事件需要重写并监控，默认所有事件都监控
 export function setSilentFlag(opitons: InitOptions = {}): void {
   setFlag(EVENTTYPES.XHR, !!opitons.silentXhr)
   setFlag(EVENTTYPES.FETCH, !!opitons.silentFetch)

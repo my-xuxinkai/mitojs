@@ -1,4 +1,4 @@
-import { IAnyObject } from '../types/common'
+import { IAnyObject } from '@/types/common'
 
 export interface VueInstance {
   config?: VueConfiguration

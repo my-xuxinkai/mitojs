@@ -1,12 +1,13 @@
-import { ERRORTYPES } from '../common/constant'
+import { ERRORTYPES } from '@/common/constant'
 import { getLocationHref, getTimestamp } from '../utils/index'
-import { ResourceErrorTarget } from '../browser/handleEvents'
-import { ReportDataType } from '../types/transportData'
-import { globalVar } from '../common/constant'
-import { Severity } from '../utils/Severity'
-import { fromHttpStatus } from '../utils/httpStatus'
-import { MITOHttp } from '../types/common'
+import { ResourceErrorTarget } from '@/browser/handleEvents'
+import { ReportDataType } from '@/types'
+import { globalVar } from '@/common/constant'
+import { Severity } from '@/utils/Severity'
+import { fromHttpStatus } from '@/utils/httpStatus'
+import { MITOHttp } from '@/types/common'
 
+// 数据格式转换
 export function httpTransform(data: MITOHttp): ReportDataType {
   let message = ''
   const { elapsedTime, time, method, traceId, type, status } = data

@@ -1,4 +1,6 @@
 export const nativeToString = Object.prototype.toString
+
+// 类型判断
 function isType(type: string) {
   return function (value: any): boolean {
     return nativeToString.call(value) === `[object ${type}]`
